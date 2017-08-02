@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+		//date具有自动调节至正确日期的功能
+		/*var date=new Date(2016,5,32);//月份：0-11   
+		console.log(date);
+		var date1=new Date(2000,1,30);
+		console.log(date1);*/
+		//计算某年某月有多少天，在控制台输出
+		/*var year=prompt("请输入年份：")*1;
+		var month=prompt("请输入月份：")*1;*/
+		//方式1：
+		/*var　d=new Date(year,month-1,31);
+		var day=d.getDate();// 2  31  1   3
+							//29  31  30  28
+		if(day==31){
+			console.log("31天");
+		}else{
+			console.log((31-day)+"天");
+		}*/
+
+		//方式2：
+		/*var date3=new Date(2000,4,0);
+		console.log(date3.getDate());*/
+
+
+		//从1980-2017年，默认显示当前日前
+
+		window.onload=function(){
+			var selyear=$("year");//DOM对象
+			var selmonth=$("month");//DOM对象
+			var seldate=$("date");//DOM对象
+			addOption(selyear,1980,2017,"年");
+			addOption(selmonth,1,12,"月");
+			addOption(seldate,1,31,"日");
+
+			//默认显示当前日期
+			var today=new Date();          
+			changeDate(today.getFullYear(),today.getMonth()+1,today.getDate());
+			selyear.onchange=function(){
+				var year=$("year").value;
+				var month=$("month").value;
+				changeDate(year,month);
+			};
+			selmonth.onchange=function(){
+				var year=$("year").value;
+				var month=$("month").value;
+				changeDate(year,month);
+			};
+
+
+		};
+
+		function addOption(sel,start,end,text){
+			for(var i=start;i<=end;i++){
+				var option=new Option(i+text,i);
+				sel.add(option,null);
+			}
+		}
+		function changeDate(year,month,date){
+			$("year").value=year;
+			$("month").value=month;
+			//求对应的年份月份所对应的天数
+			var day=new Date(year,month,0);
+			var days=day.getDate();
+			//清空下拉
+			$("date").length=0;
+			addOption($("date"),1,days,"日");
+			if(date){//判断是否传递日期
+				$("date").value=date;
+			}
+			
+		}
+
+		function $(id){
+			return document.getElementById(id);
+		}
+	</script>
+</head>
+<body>
+	<select  id="year"></select>
+	<select  id="month"></select>
+	<select  id="date"></select>
+</body>
+</html>
